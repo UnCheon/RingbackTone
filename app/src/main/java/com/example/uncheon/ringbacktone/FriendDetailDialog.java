@@ -2,6 +2,7 @@ package com.example.uncheon.ringbacktone;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -72,7 +73,6 @@ public class FriendDetailDialog extends Dialog{
             }catch (Exception e){
                 e.printStackTrace();
             }
-
             dismiss();
         }
     };
@@ -104,6 +104,10 @@ public class FriendDetailDialog extends Dialog{
                     break;
                 case R.id.btn_upload:
                     Log.i("change", "upload");
+
+                    Intent intent = new Intent(mContext, FileList.class);
+                    mContext.startActivity(intent);
+
                     break;
                 case R.id.btn_search:
                     Log.i("change", "search");
