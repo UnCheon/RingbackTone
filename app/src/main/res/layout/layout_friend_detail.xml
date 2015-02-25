@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dd434343"
+    android:gravity="bottom">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#ffffffff">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="play"
+                    android:id="@+id/btn_play_to_friend"
+                    android:textSize="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:textSize="25dp"
+                    android:text="홍대광 : 그냥 니가 좋아"
+                    android:id="@+id/tv_ring_to_friend" />
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/btn_close"
+                    android:text="X" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:id="@+id/tv_nickname"
+                android:text="uncheon"
+                android:textSize="30dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:id="@+id/tv_phone_number"
+                android:text="010-4496-1101"
+                android:textSize="25dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:text="play"
+                android:id="@+id/btn_play_to_me"
+                android:textSize="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textSize="20dp"
+                android:text="Damien Rice : the blower's daughter"
+                android:id="@+id/tv_ring_to_me" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="record"
+                android:id="@+id/btn_record"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="upload"
+                android:id="@+id/btn_upload"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="search"
+                android:id="@+id/btn_search"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
