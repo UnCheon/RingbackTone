@@ -31,7 +31,7 @@ public class FriendListActivity extends Activity {
     @Override
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_friend_list);
 
         mainHandler = new MainHandler();
 

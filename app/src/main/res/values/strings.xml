@@ -7,5 +7,6 @@
     <string name="base_url">http://128.199.97.46:8080/</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_intro">IntroActivity</string>
+    <string name="title_activity_file_list">FileListActivity</string>
 
 </resources>

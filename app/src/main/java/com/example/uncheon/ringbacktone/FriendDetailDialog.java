@@ -47,7 +47,7 @@ public class FriendDetailDialog extends Dialog{
         setContentView(R.layout.layout_friend_detail);
         setLayout();
         setData(mFriend);
-        mRingbackTone = new RingbackTone();
+        mRingbackTone = RingbackTone.getInstance();
     }
 
     public FriendDetailDialog(Context context) {
@@ -68,11 +68,7 @@ public class FriendDetailDialog extends Dialog{
 
     Button.OnClickListener closeClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            try {
-                mRingbackTone.stopRingbackTone();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            mRingbackTone.stopRingbackTone();
             dismiss();
         }
     };
@@ -103,11 +99,8 @@ public class FriendDetailDialog extends Dialog{
                     Log.i("change", "record");
                     break;
                 case R.id.btn_upload:
+                    upload();
                     Log.i("change", "upload");
-
-                    Intent intent = new Intent(mContext, FileList.class);
-                    mContext.startActivity(intent);
-
                     break;
                 case R.id.btn_search:
                     Log.i("change", "search");
@@ -115,6 +108,13 @@ public class FriendDetailDialog extends Dialog{
             }
         }
     };
+
+    private void upload(){
+
+        Intent intent = new Intent(getContext(), FileListActivity.class);
+        intent.putExtra("friend info", mFriend);
+        getContext().startActivity(intent);
+    }
 
 
     private void setLayout(){

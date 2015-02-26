@@ -1,9 +1,11 @@
 package com.example.uncheon.ringbacktone;
 
+import java.io.Serializable;
+
 /**
  * Created by baek_uncheon on 2015. 1. 29..
  */
-public class Friend {
+public class Friend implements Serializable{
     String nickname;
     String phone_number;
     String friend_id;
