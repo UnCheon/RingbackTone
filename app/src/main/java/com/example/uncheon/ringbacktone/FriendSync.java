@@ -29,20 +29,28 @@ public class FriendSync {
     Context mContext;
 
     AsyncHttpClient myClient;
+    FriendListActivity.MainHandler mainHandler;
 
-
-    FriendSync(FriendListActivity activity){
-        this.mActivity = activity;
-        this.mContext = activity;
+    FriendSync(Context context){
+        this.mContext = context;
 
         myClient = new AsyncHttpClient();
         myClient.setTimeout(30000);
         PersistentCookieStore myCookieStore = new PersistentCookieStore(mContext);
         myClient.setCookieStore(myCookieStore);
     }
+    FriendSync(Context context, FriendListActivity.MainHandler mainHandler){
+        this.mContext = context;
+
+        myClient = new AsyncHttpClient();
+        myClient.setTimeout(30000);
+        PersistentCookieStore myCookieStore = new PersistentCookieStore(mContext);
+        myClient.setCookieStore(myCookieStore);
+        this.mainHandler = mainHandler;
+    }
 
 
-    public void syncFriends(final FriendListActivity.MainHandler mainHandler){
+    public void syncFriends(){
 
         ContactDBOpenHelper mContactDBOpenHelper = new ContactDBOpenHelper(mContext);
         mContactDBOpenHelper.open_writableDatabase();
@@ -54,7 +62,7 @@ public class FriendSync {
 
 //        count new contacts list
         if (mCursor.getCount() == 0){
-            updateCheck(mainHandler);
+            updateCheck();
         }else{
             String url = mContext.getString(R.string.base_url)+ "account/sync/friends/";
             while(mCursor.moveToNext()){
@@ -76,7 +84,8 @@ public class FriendSync {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     Log.i("HTTP RESPONSE......", new String(responseBody));
-                    syncLocalFriends(responseBody, mainHandler);
+                    syncLocalFriends(responseBody);
+                    updateFriendListUI();
                 }
 
                 @Override
@@ -87,7 +96,7 @@ public class FriendSync {
         }
     }
 
-    public void updateCheck(final FriendListActivity.MainHandler mainHandler){
+    public void updateCheck(){
         Log.i("tag", "update check");
 
         String url = mContext.getString(R.string.base_url)+ "account/update/check/";
@@ -95,7 +104,8 @@ public class FriendSync {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i("HTTP RESPONSE......", new String(responseBody));
-                syncLocalFriends(responseBody, mainHandler);
+                syncLocalFriends(responseBody);
+                updateFriendListUI();
             }
 
             @Override
@@ -107,9 +117,9 @@ public class FriendSync {
 
 
 
-    public void syncLocalFriends(byte[] responseBody, FriendListActivity.MainHandler mainHandler){
+    public void syncLocalFriends(byte[] responseBody){
         String result_string = new String(responseBody);
-
+        Log.i("json", result_string);
         JSONArray response_object = null;
         String status = null;
 
@@ -117,6 +127,7 @@ public class FriendSync {
             JSONObject result_object = new JSONObject(result_string);
             response_object = result_object.getJSONArray("response");
             status = result_object.getString("status");
+
         }catch (JSONException e){}
 
         if (status.equals("success")){
@@ -129,12 +140,14 @@ public class FriendSync {
             mFriendDBOpenHelper.open_writableDatabase();
             mFriendDBOpenHelper.setFriends(response_object);
             mFriendDBOpenHelper.close();
-
-            Message msg;
-            msg = Message.obtain();
-            msg.what = UPDATE_FRIENDS_LIST;
-            mainHandler.sendMessage(msg);
         }
+    }
+
+    private void updateFriendListUI(){
+        Message msg;
+        msg = Message.obtain();
+        msg.what = UPDATE_FRIENDS_LIST;
+        mainHandler.sendMessage(msg);
     }
 
 

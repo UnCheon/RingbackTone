@@ -34,8 +34,6 @@ public class FileListActivity extends Activity {
         lv_file_list = (ListView)findViewById(R.id.lv_file_list);
         adapter = new FileAdapter(this, c, true, mFriend);
         lv_file_list.setAdapter(adapter);
-
-
     }
 
 

@@ -58,6 +58,9 @@ public class BackgroundService extends Service{
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+
+
 		
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
@@ -144,7 +147,13 @@ public class BackgroundService extends Service{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId){
 		Log.i("service", "onStart");
-		return START_STICKY;
+        String phone_number = intent.getStringExtra("phone_number");
+
+//                getExtras().get("phone_number");
+        Log.i("service on start", phone_number);
+        Log.i("service on start", phone_number);
+
+        return START_STICKY;
 	}
 	
 	

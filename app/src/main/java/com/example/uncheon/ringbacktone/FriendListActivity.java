@@ -39,13 +39,13 @@ public class FriendListActivity extends Activity {
         mContext = this;
 
         mContactSync= new ContactSync(FriendListActivity.this);
-        mFriendSync = new FriendSync(FriendListActivity.this);
+        mFriendSync = new FriendSync(this, mainHandler);
 
         FriendsAdapter adapter = new FriendsAdapter(FriendListActivity.this, R.layout.layout_friend_item, mFriendSync.getFriendList());
         lv_friend_list.setAdapter(adapter);
 
         mContactSync.syncLocalContacts();
-        mFriendSync.syncFriends(mainHandler);
+        mFriendSync.syncFriends();
 
 
     }
@@ -53,8 +53,8 @@ public class FriendListActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
-
+        FriendsAdapter adapter = new FriendsAdapter(FriendListActivity.this, R.layout.layout_friend_item, mFriendSync.getFriendList());
+        lv_friend_list.setAdapter(adapter);
     }
 
     class MainHandler extends Handler {

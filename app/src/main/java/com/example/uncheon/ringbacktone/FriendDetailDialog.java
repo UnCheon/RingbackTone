@@ -2,6 +2,7 @@ package com.example.uncheon.ringbacktone;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +49,15 @@ public class FriendDetailDialog extends Dialog{
         setLayout();
         setData(mFriend);
         mRingbackTone = RingbackTone.getInstance();
+
+        this.setOnShowListener(new OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Log.i("show dialog", "show show show show");
+
+            }
+        });
+
     }
 
     public FriendDetailDialog(Context context) {
@@ -60,6 +70,11 @@ public class FriendDetailDialog extends Dialog{
     }
 
     public void setData(Friend mFriend){
+//        FriendDBOpenHelper mFriendDBOpenHelper = new FriendDBOpenHelper(mContext);
+//        mFriendDBOpenHelper.open_writableDatabase();
+//        mFriendDBOpenHelper.setFriends(response_object);
+//        mFriendDBOpenHelper.close();
+
         tv_nickname.setText(mFriend.getNickname());
         tv_phone_number.setText(mFriend.getPhoneNumber());
         tv_ring_to_friend.setText(mFriend.getRingToFriendTitle());
@@ -136,4 +151,9 @@ public class FriendDetailDialog extends Dialog{
         btn_upload.setOnClickListener(changeClickListener);
         btn_search.setOnClickListener(changeClickListener);
     }
+
+
+
+
+
 }

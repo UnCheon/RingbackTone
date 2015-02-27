@@ -70,6 +70,9 @@ public class FriendDBOpenHelper {
 
     public Cursor getFriends(){ return mDB.query(TABLE_NAME, null, null, null, null, null, null, null); }
 
+    public Cursor getFriendWithPhoneNumber(String phone_number){return mDB.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE phone_number='"+phone_number+"';", null);}
+
+
     public void setFriends (JSONArray response_object) {
         ContentValues row;
 

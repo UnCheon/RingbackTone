@@ -1,5 +1,6 @@
 package com.example.uncheon.ringbacktone;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -34,6 +35,12 @@ public class AlloHTTPConnect {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i("HTTP RESPONSE......", new String(responseBody));
+                FriendSync mFriendSync;
+                mFriendSync = new FriendSync(mContext);
+                mFriendSync.syncLocalFriends(responseBody);
+
+                Activity mActivity = (Activity)mContext;
+                mActivity.finish();
             }
 
             @Override
