@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="play"
+        android:id="@+id/btn_play_file"
+        android:textSize="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:text="홍대광 : 그냥 니가 좋아"
+        android:id="@+id/tv_file_name" />
+    </LinearLayout>
+<!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/src/main/res/layout/layout_file_list_item.xml -->

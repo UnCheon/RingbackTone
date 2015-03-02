@@ -145,7 +145,7 @@ public class RegisterActivity extends ActionBarActivity {
             RequestParams params = new RequestParams();
             params.put("phone_number", phone_number);
             params.put("nickname", et_nickname.getText());
-            params.put("device_uuid", String.valueOf(certification_number));
+            params.put("device_uuid", phone_number);
             params.put("device_type", "android");
 
             myClient.post(url, params, new AsyncHttpResponseHandler() {

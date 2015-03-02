@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -94,10 +95,10 @@ public class FriendDetailDialog extends Dialog{
             try {
                 switch (v.getId()){
                     case R.id.btn_play_to_me:
-                        mRingbackTone.playRingbackTone(mFriend.getRingToMeURL());
+                        mRingbackTone.playRingbackTone("http://128.199.97.46:8080"+mFriend.getRingToMeURL());
                         break;
                     case R.id.btn_play_to_friend:
-                        mRingbackTone.playRingbackTone(mFriend.getRingToFriendURL());
+                        mRingbackTone.playRingbackTone("http://128.199.97.46:8080"+mFriend.getRingToFriendURL());
                         break;
                 }
             } catch (Exception e) {
@@ -152,7 +153,14 @@ public class FriendDetailDialog extends Dialog{
         btn_search.setOnClickListener(changeClickListener);
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 
 

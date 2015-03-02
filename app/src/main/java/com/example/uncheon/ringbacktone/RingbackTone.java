@@ -2,7 +2,6 @@ package com.example.uncheon.ringbacktone;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -22,28 +21,33 @@ public class RingbackTone {
 
     private MediaPlayer mMediaPlayer;
 
-    public void playRingbackTone(String ring_url){
-        String url = "http://128.199.97.46:8080"+ring_url;
-        Log.i("ring url", url);
-        if (mMediaPlayer != null) {
+    public void playRingbackTone(String url){
+
+        if (mMediaPlayer != null){
+            if (mMediaPlayer.isPlaying()){
+                mMediaPlayer.stop();
+            }
             mMediaPlayer.release();
             mMediaPlayer = null;
-        }else{
-            mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setLooping(false);
-            try {
-                mMediaPlayer.setDataSource(url);
-                mMediaPlayer.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mMediaPlayer.start();
         }
+
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mMediaPlayer.setLooping(false);
+        try {
+            mMediaPlayer.setDataSource(url);
+            mMediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mMediaPlayer.start();
     }
 
     public void stopRingbackTone(){
-        if (mMediaPlayer != null) {
+        if (mMediaPlayer != null){
+            if (mMediaPlayer.isPlaying()){
+                mMediaPlayer.stop();
+            }
             mMediaPlayer.release();
             mMediaPlayer = null;
         }

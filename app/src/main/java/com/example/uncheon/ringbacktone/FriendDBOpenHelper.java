@@ -70,7 +70,22 @@ public class FriendDBOpenHelper {
 
     public Cursor getFriends(){ return mDB.query(TABLE_NAME, null, null, null, null, null, null, null); }
 
-    public Cursor getFriendWithPhoneNumber(String phone_number){return mDB.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE phone_number='"+phone_number+"';", null);}
+    public Friend getFriendWithPhoneNumber(String phone_number){
+        Cursor cursor = mDB.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE phone_number='"+phone_number+"';", null);
+        cursor.moveToFirst();
+        Log.i("friend count", String.valueOf(cursor.getCount()));
+
+        Friend mFriend = new Friend();
+        mFriend.setPhoneNumber(cursor.getString(1));
+        mFriend.setNickname(cursor.getString(2));
+        mFriend.setFriendId(cursor.getString(3));
+        mFriend.setRingToMeTitle(cursor.getString(4));
+        mFriend.setRingToMeURL(cursor.getString(5));
+        mFriend.setRingToFriendTitle(cursor.getString(6));
+        mFriend.setRingToFriendURL(cursor.getString(7));
+
+        return mFriend;
+    }
 
 
     public void setFriends (JSONArray response_object) {

@@ -33,6 +33,7 @@ public class FriendListActivity extends Activity {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_friend_list);
 
+
         mainHandler = new MainHandler();
 
         lv_friend_list = (ListView) findViewById(R.id.lv_friend_list);

@@ -14,7 +14,7 @@ public class OutCallBroadcasting extends BroadcastReceiver{
     public String TAG = getClass().getSimpleName();
 
     @Override
-	public void onReceive(final Context context, Intent intent) {
+	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
         String action = intent.getAction();
         Bundle bundle = intent.getExtras();
@@ -37,10 +37,12 @@ public class OutCallBroadcasting extends BroadcastReceiver{
         }else if(action.equals(Intent.ACTION_NEW_OUTGOING_CALL)){
 
             Log.d(TAG, " OUTGOING CALL : " + bundle.getString(Intent.EXTRA_PHONE_NUMBER));
+            Log.d(TAG, " OUTGOING CALL : " + bundle.getString(Intent.EXTRA_PHONE_NUMBER));
 
             String phone_number = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
             Intent mIntent = new Intent(context, BackgroundService.class);
-            intent.putExtra("phone_number", phone_number);
+            mIntent.putExtra("phone_number", phone_number);
+
             context.startService(mIntent);
         }
     }
