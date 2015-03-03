@@ -49,7 +49,7 @@ public class BackgroundService extends Service{
         mRingbackTone = RingbackTone.getInstance();
         mRingbackTone.playRingbackTone("http://128.199.97.46:8080"+mFriend.getRingToFriendURL());
 
-        new AsyncFFTHook(getApplicationContext()).execute("start", "start", "start");
+//        new AsyncFFTHook(getApplicationContext()).execute("start", "start", "start");
 
 
         return START_STICKY;
@@ -66,6 +66,7 @@ public class BackgroundService extends Service{
 
         audioManager.setMode(AudioManager.MODE_CURRENT);
         audioManager.setMicrophoneMute(false);
+        new AsyncFFTHook(getApplicationContext()).cancel(true);
 
     }
 }

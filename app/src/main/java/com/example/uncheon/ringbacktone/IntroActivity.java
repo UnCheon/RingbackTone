@@ -11,12 +11,19 @@ import android.view.MenuItem;
 
 public class IntroActivity extends ActionBarActivity {
 
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_intro);
+
+
+
+
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -73,4 +80,6 @@ public class IntroActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
+
 }
+

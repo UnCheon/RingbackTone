@@ -157,11 +157,10 @@ public class FriendDetailDialog extends Dialog{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
+                mRingbackTone.stopRingbackTone();
+                dismiss();
                 return true;
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
-
 }

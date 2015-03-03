@@ -101,11 +101,10 @@ public class AsyncFFTHook extends AsyncTask<String, String, String>{
 
         audioManager.setMicrophoneMute(true);
 
-        while (!connected) {
+        while (!connected && !isCancelled()) {
             int bufferReadResult = audioRecord.read(buffer, 0, blockSize);
             for (int i = 0; i < blockSize && i < bufferReadResult; i++) {
-                toTransform[i] = (double) buffer[i] / Short.MAX_VALUE; // ��ȣ �ִ�
-                // 16��Ʈ
+                toTransform[i] = (double) buffer[i] / Short.MAX_VALUE;
             }
             transformer.ft(toTransform);
             fftUpdate(toTransform);
@@ -198,7 +197,6 @@ public class AsyncFFTHook extends AsyncTask<String, String, String>{
 
             if(audioRecord != null)
                 audioRecord.release();
-
 
         } else {
             prevStopTime = System.currentTimeMillis();

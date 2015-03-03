@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.ListView;
 
 
-
 /**
  * Created by baek_uncheon on 2015. 1. 7..
  */
@@ -27,6 +26,8 @@ public class FriendListActivity extends Activity {
     MainHandler mainHandler;
     ContactSync mContactSync;
     FriendSync mFriendSync;
+
+
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -47,6 +48,13 @@ public class FriendListActivity extends Activity {
 
         mContactSync.syncLocalContacts();
         mFriendSync.syncFriends();
+
+
+
+
+
+
+
 
 
     }
