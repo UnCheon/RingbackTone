@@ -76,7 +76,8 @@ public class IntroActivity extends ActionBarActivity {
     }
 
     private void go_main() {
-        Intent intent = new Intent(this, FriendListActivity.class);
+//        Intent intent = new Intent(this, FriendListActivity.class);
+        Intent intent = new Intent(this, AddRecordFile.class);
         startActivity(intent);
         finish();
     }

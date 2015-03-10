@@ -38,6 +38,9 @@ public class AsyncFFTHook extends AsyncTask<String, String, String>{
     private RealDoubleFFT transformer;
     int blockSize = 256;
 
+    private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.VOICE_CALL;
+    private static final int SAMPLE_RATE = 44100;
+
 
     public AsyncFFTHook(Context context){
         this.context = context;
@@ -87,12 +90,12 @@ public class AsyncFFTHook extends AsyncTask<String, String, String>{
         recorder = new MediaRecorder();
         transformer = new RealDoubleFFT(blockSize);
 
-        recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_DOWNLINK);
+        recorder.setAudioSource(AUDIO_SOURCE);
+
 
         int bufferSize = AudioRecord.getMinBufferSize(frequency, channelConfiguration, audioEncoding);
 
-        audioRecord = new AudioRecord(MediaRecorder.AudioSource.VOICE_CALL,
-                frequency, channelConfiguration, audioEncoding, bufferSize);
+        audioRecord = new AudioRecord(AUDIO_SOURCE, frequency, channelConfiguration, audioEncoding, bufferSize);
         short[] buffer = new short[blockSize];
         double[] toTransform = new double[blockSize];
 
