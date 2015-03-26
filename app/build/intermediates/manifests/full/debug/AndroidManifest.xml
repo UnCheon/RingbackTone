@@ -24,10 +24,10 @@
     <uses-permission android:name="android.permission.READ_PRECISE_PHONE_STATE" />
 
     <permission
-        android:name="com.example.uncheon.ringbacktone.gcm.permission.C2D_MESSAGE"
+        android:name="com.allo.gcm.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.uncheon.ringbacktone.gcm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.allo.gcm.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
@@ -35,14 +35,14 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <receiver android:name="com.example.uncheon.ringbacktone.OutCallBroadcasting" >
+        <receiver android:name="com.allo.OutCallBroadcasting" >
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.example.uncheon.ringbacktone.GcmBroadcastReceiver"
+            android:name="com.allo.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -51,13 +51,13 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.example.uncheon.ringbacktone.GcmIntentService" />
+        <service android:name="com.allo.GcmIntentService" />
         <service
-            android:name="com.example.uncheon.ringbacktone.BackgroundService"
+            android:name="com.allo.BackgroundService"
             android:hardwareAccelerated="false" />
 
         <activity
-            android:name="com.example.uncheon.ringbacktone.IntroActivity"
+            android:name="com.allo.IntroActivity"
             android:label="@string/title_activity_intro"
             android:launchMode="singleTask" >
             <intent-filter>
@@ -67,23 +67,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.uncheon.ringbacktone.AddRecordFile"
+            android:name="com.allo.AgreeActivity"
+            android:label="@string/title_activity_agree" >
+        </activity>
+        <activity
+            android:name="com.allo.AddRecordFile"
             android:label="@string/title_activity_register" >
         </activity>
         <activity
-            android:name="com.example.uncheon.ringbacktone.RegisterActivity"
+            android:name="com.allo.RegisterActivity"
             android:label="@string/title_activity_register" >
         </activity>
         <activity
-            android:name="com.example.uncheon.ringbacktone.FriendListActivity"
+            android:name="com.allo.NameActivity"
+            android:label="@string/title_activity_name" >
+        </activity>
+        <activity
+            android:name="com.allo.FriendListActivity"
             android:label="FriendListActivity" >
         </activity>
         <activity
-            android:name="com.example.uncheon.ringbacktone.FileList"
-            android:label="FileList" >
+            android:name="com.allo.MainActivity"
+            android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name="com.example.uncheon.ringbacktone.FileListActivity"
+            android:name="com.allo.ChangeAlloActivity"
+            android:label="@string/title_activity_change_allo_activity" >
+        </activity>
+        <activity
+            android:name="com.allo.FileListActivity"
             android:label="@string/title_activity_file_list" >
         </activity>
     </application>

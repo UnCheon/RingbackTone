@@ -2,32 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/baek_uncheon/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.5/77bf7cacf9cefe19dc105e5425d2eb1bb5285881/android-async-http-1.4.5.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="77bf7cacf9cefe19dc105e5425d2eb1bb5285881">
-        <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.5-24f28f52b52df051f0ec620570561fb2ab35167c.jar" />
-    </item>
-    <item
         jar="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81">
         <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/classes-48a7c426c45611d7f118f4d1d6521b829377ed2b.jar" />
-    </item>
-    <item
-        jar="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/classes-73e181d689d02147048df34a434f41f9cbd35ab3.jar" />
-    </item>
-    <item
-        jar="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-f15227086566e81c0a958ca0456275ab200d17e2.jar" />
     </item>
     <item
         jar="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
@@ -42,6 +21,27 @@
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
         <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-d5313fa08770ea7248ad54e21c7ead27ff0d325f.jar" />
+    </item>
+    <item
+        jar="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-f15227086566e81c0a958ca0456275ab200d17e2.jar" />
+    </item>
+    <item
+        jar="/Users/baek_uncheon/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.5/77bf7cacf9cefe19dc105e5425d2eb1bb5285881/android-async-http-1.4.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="77bf7cacf9cefe19dc105e5425d2eb1bb5285881">
+        <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.5-24f28f52b52df051f0ec620570561fb2ab35167c.jar" />
+    </item>
+    <item
+        jar="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/pre-dexed/debug/classes-73e181d689d02147048df34a434f41f9cbd35ab3.jar" />
     </item>
 
 </items>

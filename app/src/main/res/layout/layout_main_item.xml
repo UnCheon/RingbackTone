@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_height="70dp"
+    android:background="@drawable/grey_border_flat" >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="25dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/light_grey_border">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:paddingLeft="5dp"
+            android:textColor="#111"
+            android:layout_weight="1"
+            android:id="@+id/fName"
+            android:text="김은영" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:paddingLeft="5dp"
+            android:textColor="#777"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:id="@+id/fTel"
+            android:text="010-1234-5678" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/fSongInfoBtn"
+                android:background="@drawable/damienrice"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="12dp"
+                android:textColor="#000"
+                android:text="The blower's daughter"
+                android:id="@+id/fSongTV" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="10dp"
+                android:textColor="#999"
+                android:text="by Damien Rice"
+                android:id="@+id/fSongArtistTV" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical|right"
+            android:paddingRight="20dp"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="9"
+            android:id="@+id/inSongPlayLayout">
+
+            <ImageButton
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/inSongPlayBtn"
+                android:background="@drawable/play_btn" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

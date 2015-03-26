@@ -69,13 +69,13 @@ uses-permission#android.permission.READ_PRECISE_PHONE_STATE
 ADDED from AndroidManifest.xml:18:5
 	android:name
 		ADDED from AndroidManifest.xml:18:22
-permission#com.example.uncheon.ringbacktone.gcm.permission.C2D_MESSAGE
+permission#com.allo.gcm.permission.C2D_MESSAGE
 ADDED from AndroidManifest.xml:20:5
 	android:protectionLevel
 		ADDED from AndroidManifest.xml:22:9
 	android:name
 		ADDED from AndroidManifest.xml:21:9
-uses-permission#com.example.uncheon.ringbacktone.gcm.permission.C2D_MESSAGE
+uses-permission#com.allo.gcm.permission.C2D_MESSAGE
 ADDED from AndroidManifest.xml:23:5
 	android:name
 		ADDED from AndroidManifest.xml:23:22
@@ -96,7 +96,7 @@ MERGED from com.android.support:support-v4:21.0.3:16:5
 		ADDED from AndroidManifest.xml:28:9
 	android:theme
 		ADDED from AndroidManifest.xml:30:9
-receiver#com.example.uncheon.ringbacktone.OutCallBroadcasting
+receiver#com.allo.OutCallBroadcasting
 ADDED from AndroidManifest.xml:31:9
 	android:name
 		ADDED from AndroidManifest.xml:31:19
@@ -110,7 +110,7 @@ action#android.intent.action.PHONE_STATE
 ADDED from AndroidManifest.xml:34:17
 	android:name
 		ADDED from AndroidManifest.xml:34:25
-receiver#com.example.uncheon.ringbacktone.GcmBroadcastReceiver
+receiver#com.allo.GcmBroadcastReceiver
 ADDED from AndroidManifest.xml:38:9
 	android:permission
 		ADDED from AndroidManifest.xml:40:13
@@ -126,17 +126,17 @@ category#kr.mint.testgcm
 ADDED from AndroidManifest.xml:43:17
 	android:name
 		ADDED from AndroidManifest.xml:43:27
-service#com.example.uncheon.ringbacktone.GcmIntentService
+service#com.allo.GcmIntentService
 ADDED from AndroidManifest.xml:47:9
 	android:name
 		ADDED from AndroidManifest.xml:47:18
-service#com.example.uncheon.ringbacktone.BackgroundService
+service#com.allo.BackgroundService
 ADDED from AndroidManifest.xml:50:9
 	android:hardwareAccelerated
 		ADDED from AndroidManifest.xml:52:13
 	android:name
 		ADDED from AndroidManifest.xml:51:13
-activity#com.example.uncheon.ringbacktone.IntroActivity
+activity#com.allo.IntroActivity
 ADDED from AndroidManifest.xml:54:9
 	android:label
 		ADDED from AndroidManifest.xml:57:13
@@ -154,36 +154,54 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:60:17
 	android:name
 		ADDED from AndroidManifest.xml:60:27
-activity#com.example.uncheon.ringbacktone.AddRecordFile
+activity#com.allo.AgreeActivity
 ADDED from AndroidManifest.xml:64:9
 	android:label
 		ADDED from AndroidManifest.xml:66:13
 	android:name
 		ADDED from AndroidManifest.xml:65:13
-activity#com.example.uncheon.ringbacktone.RegisterActivity
-ADDED from AndroidManifest.xml:68:9
+activity#com.allo.AddRecordFile
+ADDED from AndroidManifest.xml:69:9
 	android:label
+		ADDED from AndroidManifest.xml:71:13
+	android:name
 		ADDED from AndroidManifest.xml:70:13
-	android:name
-		ADDED from AndroidManifest.xml:69:13
-activity#com.example.uncheon.ringbacktone.FriendListActivity
-ADDED from AndroidManifest.xml:72:9
+activity#com.allo.RegisterActivity
+ADDED from AndroidManifest.xml:73:9
 	android:label
+		ADDED from AndroidManifest.xml:75:13
+	android:name
 		ADDED from AndroidManifest.xml:74:13
-	android:name
-		ADDED from AndroidManifest.xml:73:13
-activity#com.example.uncheon.ringbacktone.FileList
-ADDED from AndroidManifest.xml:76:9
+activity#com.allo.NameActivity
+ADDED from AndroidManifest.xml:77:9
 	android:label
+		ADDED from AndroidManifest.xml:79:13
+	android:name
 		ADDED from AndroidManifest.xml:78:13
-	android:name
-		ADDED from AndroidManifest.xml:77:13
-activity#com.example.uncheon.ringbacktone.FileListActivity
-ADDED from AndroidManifest.xml:80:9
+activity#com.allo.FriendListActivity
+ADDED from AndroidManifest.xml:81:9
 	android:label
-		ADDED from AndroidManifest.xml:82:13
+		ADDED from AndroidManifest.xml:83:13
 	android:name
-		ADDED from AndroidManifest.xml:81:13
+		ADDED from AndroidManifest.xml:82:13
+activity#com.allo.MainActivity
+ADDED from AndroidManifest.xml:85:9
+	android:label
+		ADDED from AndroidManifest.xml:87:13
+	android:name
+		ADDED from AndroidManifest.xml:86:13
+activity#com.allo.ChangeAlloActivity
+ADDED from AndroidManifest.xml:89:9
+	android:label
+		ADDED from AndroidManifest.xml:91:13
+	android:name
+		ADDED from AndroidManifest.xml:90:13
+activity#com.allo.FileListActivity
+ADDED from AndroidManifest.xml:93:9
+	android:label
+		ADDED from AndroidManifest.xml:95:13
+	android:name
+		ADDED from AndroidManifest.xml:94:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:appcompat-v7:21.0.3:15:5

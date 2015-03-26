@@ -196,7 +196,7 @@
   </string>
     <!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="base_url">http://128.199.97.46:8080/</string>
+    <string name="base_url">http://128.199.97.46:8080</string>
     <!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/strings.xml -->
     <eat-comment/>
     <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable Google Play services</string>
@@ -217,8 +217,12 @@
     <!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_agree">AgreeActivity</string>
+    <string name="title_activity_change_allo_activity">ChangeAlloActivity</string>
     <string name="title_activity_file_list">FileListActivity</string>
     <string name="title_activity_intro">IntroActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_name">NameActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/src/main/res/values/styles.xml -->
     <eat-comment/>
