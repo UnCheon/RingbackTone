@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:visibility="visible"
+    android:id="@+id/recordLayout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <!--<com.skd.androidrecording.visualizer.VisualizerView-->
+        <!--android:id="@+id/visualizerView"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent" >-->
+        <!--</com.skd.androidrecording.visualizer.VisualizerView>-->
+    </LinearLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#ccc" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="70dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="45dp"
+            android:background="@drawable/red_border_circle"
+            android:padding="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="45dp">
+            <ImageButton
+                android:layout_gravity="center"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:id="@+id/playBtn"
+                android:textColor="#f91f30"
+                android:textSize="15dp"
+                android:background="@drawable/play_btn" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="70dp"
+            android:background="@drawable/red_border_circle"
+            android:padding="10dp"
+            android:layout_height="70dp">
+            <ImageButton
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/recordingBtn"
+                android:textColor="#f91f30"
+                android:textSize="15dp"
+                android:background="@drawable/record" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+

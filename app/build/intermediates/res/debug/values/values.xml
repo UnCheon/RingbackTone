@@ -217,13 +217,15 @@
     <!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_allo">AddAlloActivity</string>
     <string name="title_activity_agree">AgreeActivity</string>
-    <string name="title_activity_change_allo_activity">ChangeAlloActivity</string>
+    <string name="title_activity_change_allo">ChangeAlloActivity</string>
     <string name="title_activity_file_list">FileListActivity</string>
     <string name="title_activity_intro">IntroActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_name">NameActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_fragment_activity_add_allo">AddAlloFragmentActivity</string>
     <!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">

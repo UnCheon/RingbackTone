@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendAdapter extends ArrayAdapter<Friend> {
+public class MainAdapter extends ArrayAdapter<Friend> {
 
     private int resId;
     private ArrayList<Friend> friend_list;
@@ -25,7 +25,7 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
     public int listCount = 0;
     FriendDetailDialog mFriendDetailDialog;
 
-    public FriendAdapter(Context context, int textViewResourceId, List<Friend> objects) {
+    public MainAdapter(Context context, int textViewResourceId, List<Friend> objects) {
         super(context, textViewResourceId, objects);
         this.context = context;
         resId = textViewResourceId;
@@ -66,8 +66,6 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
             holder.inSongPlayBtn = (ImageButton) v.findViewById(R.id.inSongPlayBtn);
             holder.inSongPlayLayout = (LinearLayout) v.findViewById(R.id.inSongPlayLayout);
 
-
-
             v.setTag(holder);
         } else {
             holder = (ViewHolder) v.getTag();
@@ -81,13 +79,42 @@ public class FriendAdapter extends ArrayAdapter<Friend> {
             holder.fSongTV.setText(mFriend.getRingTitle());
             holder.fSongArtistTV.setText(mFriend.getRingSinger());
             holder.fTel.setText(mFriend.getPhoneNumber());
+
+            if (mFriend.getIsPlaying()){
+                holder.inSongPlayBtn.setBackgroundResource(R.drawable.pause_btn);
+            }else{
+                holder.inSongPlayBtn.setBackgroundResource(R.drawable.play_btn);
+            }
+
+
             final int play_position = position;
             holder.inSongPlayLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    for (int i = 0 ; i < friend_list.size(); i++) {
+                        if (i != play_position) {
+                            Friend friend = friend_list.get(i);
+                            if (friend.getIsPlaying()) {
+                                friend.setIsPlaying(false);
+                                friend_list.set(i, friend);
+                            }
+                        }
+                    }
+
                     Friend mFriend;
                     mFriend = friend_list.get(play_position);
+
+                    if (mFriend.getIsPlaying()){
+                        mFriend.setIsPlaying(false);
+                    }else{
+                        mFriend.setIsPlaying(true);
+                    }
+                    friend_list.set(play_position, mFriend);
+
+                    ((MainActivity)context).listViewUpdate(friend_list);
+                    ((MainActivity)context).myInfoUIInit();
                     ((MainActivity)context).playUpdate(mFriend);
+
                 }
             });
         }

@@ -12,8 +12,11 @@ public class Friend implements Serializable{
     String ring_url;
     String ring_title;
     String ring_singer;
+    String ring_album;
     String start_point;
     String ring_count;
+    boolean isPlaying;
+
 
     String ring_to_me_url;
     String ring_to_me_title;
@@ -49,11 +52,17 @@ public class Friend implements Serializable{
     public String getRingSinger(){ return ring_singer; }
     public void setRingSinger(String ring_singer){ this.ring_singer = ring_singer; }
 
+    public String getRingAlbum(){return ring_album;}
+    public void setRingAlbum(String ring_album){this.ring_album = ring_album;}
+
     public String getRingCount(){return ring_count;}
     public String setRingCount(String ring_count){return this.ring_count=ring_count;}
 
     public String getStartPoint(){return start_point;}
     public void setStartPoint(String start_point){this.start_point=start_point;}
+
+    public boolean getIsPlaying(){return isPlaying;}
+    public void setIsPlaying(boolean isPlaying){this.isPlaying=isPlaying;}
 
 
 

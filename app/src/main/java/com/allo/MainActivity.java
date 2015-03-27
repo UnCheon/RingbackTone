@@ -57,6 +57,8 @@ public class MainActivity extends Activity{
 
     ArrayList<Friend> friend_array;
 
+    boolean isFirstResume = true;
+
 
     @Override
     protected void onCreate(Bundle saveInstanceState) {
@@ -84,7 +86,8 @@ public class MainActivity extends Activity{
         myInfoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, ChangeAlloActivity.class);
+                Intent intent = new Intent(mContext, MyAlloActivity.class);
+                intent.putExtra("myInfo", myInfo);
                 startActivity(intent);
             }
         });
@@ -92,7 +95,16 @@ public class MainActivity extends Activity{
             @Override
             public void onClick(View v) {
                 currentFriend = myInfo;
-                playRingbackTone();
+                if (myInfo.getIsPlaying()){
+                    myInfo.setIsPlaying(false);
+                    mySongPlayBtn.setBackgroundResource(R.drawable.play_btn);
+                    pauseRingbackTone();
+                }else{
+                    myInfo.setIsPlaying(true);
+                    mySongPlayBtn.setBackgroundResource(R.drawable.pause_btn);
+                    playRingbackTone();
+                }
+                listViewUIInit();
             }
         });
 
@@ -104,39 +116,52 @@ public class MainActivity extends Activity{
 
         mContactSync.syncLocalContacts();
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("custom-event-name"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("allo-state"));
 
+    }
+
+    private void setPlayBarUI(){
+        String play_title = myInfo.getRingTitle()+" - "+myInfo.getRingSinger();
+        playSongTV.setText(play_title);
+        RingbackTone mRingbackTone = RingbackTone.getInstance();
+        mRingbackTone.setNowPlayingFriend(currentFriend);
     }
 
 
     public void playRingbackTone(){
         RingbackTone mRingbackTone = RingbackTone.getInstance();
-        String url = mContext.getString(R.string.base_url)+currentFriend.getRingURL();
+        String substring = currentFriend.getRingURL().substring(1, 8);
+        String url;
+        if (substring.equals("storage"))
+            url = currentFriend.getRingURL();
+        else
+            url = mContext.getString(R.string.base_url)+currentFriend.getRingURL();
+
+
         mRingbackTone.playRingbackTone(url);
+        mRingbackTone.setNowPlayingFriend(currentFriend);
+
         playSongPlayBtn.setBackgroundResource(R.drawable.pause_white_btn);
         String play_title = currentFriend.getRingTitle()+" - "+currentFriend.getRingSinger();
         playSongTV.setText(play_title);
+
     }
     public void pauseRingbackTone(){
         RingbackTone mRingbackTone = RingbackTone.getInstance();
         mRingbackTone.pauseRingBackTone();
-        playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
+        playBarUIInit();
     }
 
 
-    public void playSongPlayBtn(View v){
-        RingbackTone mRingbackTone = RingbackTone.getInstance();
-        if (mRingbackTone.isPlayingNow()){
-            pauseRingbackTone();
-        }else{
-            playRingbackTone();
-        }
-    }
 
 
     public void playUpdate(Friend mFriend){
         currentFriend = mFriend;
-        playRingbackTone();
+        if (mFriend.getIsPlaying()){
+            playRingbackTone();
+        }else{
+            pauseRingbackTone();
+        }
     }
 
 
@@ -145,8 +170,14 @@ public class MainActivity extends Activity{
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
+            Log.i("receiver", "stop stop stop");
             String message = intent.getStringExtra("message");
-            Log.d("receiver", "Got message: " + message);
+            if (message.equals("stop")){
+                myInfoUIInit();
+                listViewUIInit();
+                playBarUIInit();
+            }
+
         }
     };
 
@@ -225,6 +256,8 @@ public class MainActivity extends Activity{
                 myInfo.setRingURL(my_info_object.getString("ring_to_me_url"));
                 myInfo.setRingCount(my_info_object.getString("my_ring_count"));
                 myInfo.setStartPoint(my_info_object.getString("start_point"));
+                myInfo.setIsPlaying(false);
+
                 myNameTV.setText(myInfo.getNickname());
                 String ring_count = "총 "+myInfo.getRingCount()+"곡";
                 myInfoTV.setText(ring_count);
@@ -233,8 +266,7 @@ public class MainActivity extends Activity{
 
                 currentFriend = myInfo;
 //                setRingbackTone(myInfo);
-                String play_title = myInfo.getRingTitle()+" - "+myInfo.getRingSinger();
-                playSongTV.setText(play_title);
+                setPlayBarUI();
 
 
 
@@ -261,6 +293,7 @@ public class MainActivity extends Activity{
                     mFriend.setRingTitle(ring_to_friend_title);
                     mFriend.setRingURL(ring_to_friend_url);
                     mFriend.setRingSinger(ring_to_friend_singer);
+                    mFriend.setIsPlaying(false);
 
                     friend_array.add(mFriend);
                 }
@@ -268,7 +301,7 @@ public class MainActivity extends Activity{
                 Log.i("friend array size", String.valueOf(friends_object.length()));
 
 
-                FriendAdapter adapter = new FriendAdapter(MainActivity.this, R.layout.layout_main_item, friend_array);
+                MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.layout_main_item, friend_array);
                 friendList.setAdapter(adapter);
 
                 int height = 70*(friends_object.length());
@@ -302,7 +335,36 @@ public class MainActivity extends Activity{
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("resume", "onResume onResume");
+        if (isFirstResume){
+            isFirstResume = false;
+        }else{
+            setResumePlayBarUI();
+        }
+    }
 
+    private void setResumePlayBarUI(){
+        RingbackTone mRingbackTone = RingbackTone.getInstance();
+        currentFriend = mRingbackTone.getNowPlayingFriend();
+        boolean isPlaying = mRingbackTone.isPlayingNow();
+
+        String play_title = currentFriend.getRingTitle()+" - "+currentFriend.getRingSinger();
+        playSongTV.setText(play_title);
+
+        if (isPlaying)
+            playSongPlayBtn.setBackgroundResource(R.drawable.pause_white_btn);
+        else
+            playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.i("pause", "onPause onPause");
+    }
 
     @Override
     protected void onDestroy() {
@@ -311,4 +373,51 @@ public class MainActivity extends Activity{
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
+
+
+//     onClick method
+    public void playSongPlayBtn(View v){
+        RingbackTone mRingbackTone = RingbackTone.getInstance();
+        if (mRingbackTone.isPlayingNow()){
+            pauseRingbackTone();
+            myInfoUIInit();
+            listViewUIInit();
+        }else{
+            playRingbackTone();
+        }
+    }
+    public void listViewUpdate(ArrayList<Friend> friend_list){
+        MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.layout_main_item, friend_list);
+        friendList.setAdapter(adapter);
+    }
+
+    public void myInfoUIInit(){
+        myInfo.setIsPlaying(false);
+        mySongPlayBtn.setBackgroundResource(R.drawable.play_btn);
+    }
+
+    public void listViewUIInit(){
+        for (int i = 0 ; i < friend_array.size(); i++) {
+            Friend friend = friend_array.get(i);
+            if (friend.getIsPlaying()) {
+                friend.setIsPlaying(false);
+                friend_array.set(i, friend);
+            }
+
+        }
+        listViewUpdate(friend_array);
+    }
+
+    public void playBarUIInit(){
+        playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
+    }
+
+
+
+    public void addSongBtn(View v){
+//        Intent intent = new Intent(this, AddAlloActivity.class);
+        Intent intent = new Intent(this, FragmentActivityAddAllo.class);
+        startActivity(intent);
+    }
+
 }

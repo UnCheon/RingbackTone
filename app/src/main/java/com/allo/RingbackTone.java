@@ -16,6 +16,7 @@ public class RingbackTone extends Activity {
     final String TAG = getClass().getSimpleName();
     private static RingbackTone uniqueInstance;
     private MediaPlayer mMediaPlayer;
+    private Friend nowPlayingFriend;
 
     private final String base_url = "http://128.199.97.46:8080";
 
@@ -29,39 +30,14 @@ public class RingbackTone extends Activity {
         return uniqueInstance;
     }
 
-    public void setRing(Friend mFriend){
-        if(mMediaPlayer == null){
-            mMediaPlayer = new MediaPlayer();
-        }
-
-        if (mMediaPlayer.isPlaying()){
-            mMediaPlayer.pause();
-            mMediaPlayer.stop();
-        }
-
-        mMediaPlayer.reset();
-        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mMediaPlayer.setLooping(false);
-
-        try {
-            String url = base_url+mFriend.getRingURL();
-            Log.i("url", url);
-            mMediaPlayer.setDataSource(url);
-            mMediaPlayer.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mMediaPlayer.start();
-
+    public void setNowPlayingFriend(Friend mFriend){
+        nowPlayingFriend = mFriend;
+    }
+    public Friend getNowPlayingFriend(){
+        return nowPlayingFriend;
     }
 
-    public void playRing(){
-        mMediaPlayer.start();
-    }
 
-    public void pauseRing(){
-        mMediaPlayer.pause();
-    }
 
 
 
@@ -87,7 +63,13 @@ public class RingbackTone extends Activity {
             e.printStackTrace();
         }
         mMediaPlayer.start();
-        sendMessage();
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                sendMessage();
+            }
+        });
+
     }
 
 
@@ -123,9 +105,9 @@ public class RingbackTone extends Activity {
 
     private void sendMessage() {
         Log.d("sender", "Broadcasting message");
-        Intent intent = new Intent("custom-event-name");
+        Intent intent = new Intent("allo-state");
         // You can also include some extra data.
-        intent.putExtra("message", "This is my message!");
+        intent.putExtra("message", "stop");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
     }

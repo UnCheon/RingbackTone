@@ -223,11 +223,11 @@
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
-                    <com.skd.androidrecording.visualizer.VisualizerView
-                        android:id="@+id/visualizerView"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent" >
-                    </com.skd.androidrecording.visualizer.VisualizerView>
+                    <!--<com.skd.androidrecording.visualizer.VisualizerView-->
+                        <!--android:id="@+id/visualizerView"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="fill_parent" >-->
+                    <!--</com.skd.androidrecording.visualizer.VisualizerView>-->
                 </LinearLayout>
                 <TextView
                     android:layout_width="fill_parent"

@@ -11,7 +11,9 @@
     <string name="title_activity_intro">IntroActivity</string>
     <string name="title_activity_file_list">FileListActivity</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_change_allo_activity">ChangeAlloActivity</string>
+    <string name="title_activity_change_allo">ChangeAlloActivity</string>
+    <string name="title_activity_add_allo">AddAlloActivity</string>
+    <string name="title_fragment_activity_add_allo">AddAlloFragmentActivity</string>
 
 
 </resources>
