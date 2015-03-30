@@ -111,9 +111,9 @@ public class MainAdapter extends ArrayAdapter<Friend> {
                     }
                     friend_list.set(play_position, mFriend);
 
-                    ((MainActivity)context).listViewUpdate(friend_list);
+                    ((MainActivity)context).listViewDataUpdate(friend_list);
                     ((MainActivity)context).myInfoUIInit();
-                    ((MainActivity)context).playUpdate(mFriend);
+                    ((MainActivity)context).playBarUIUpdate(mFriend);
 
                 }
             });

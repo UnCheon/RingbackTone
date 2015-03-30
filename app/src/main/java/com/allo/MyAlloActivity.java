@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -72,6 +73,11 @@ public class MyAlloActivity extends Activity {
 
 
     private void setLayout(){
+        alloList = (ListView)findViewById(R.id.friendList);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.layout_my_allo_header, null, false);
+        alloList.addHeaderView(view);
+
         nameTv = (TextView) findViewById(R.id.nameTV);
         mySongTV = (TextView) findViewById(R.id.mySongTV);
         mySongArtistTV = (TextView) findViewById(R.id.mySongArtistTV);
@@ -97,7 +103,7 @@ public class MyAlloActivity extends Activity {
             }
         });
 
-        alloList = (ListView)findViewById(R.id.friendList);
+
 
         imageView = (ImageView)findViewById(R.id.imageView);
         playSongTV = (TextView)findViewById(R.id.playSongTV);

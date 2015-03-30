@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:textSize="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="#999"
+        android:textColor="#fff"
+        android:text="현재 알로" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:padding="10dp">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/mySongInfoBtn"
+                android:background="@drawable/damienrice"
+                android:layout_marginLeft="8dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="12dp"
+                android:textColor="#000"
+                android:text="The blower's daughter"
+                android:id="@+id/mySongTV" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="10dp"
+                android:textColor="#999"
+                android:text="by Damien Rice"
+                android:id="@+id/mySongArtistTV" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center_vertical|right"
+            android:paddingRight="20dp"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="9"
+            android:id="@+id/mySongPlayLayout">
+
+            <ImageButton
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/mySongPlayBtn"
+                android:background="@drawable/play_btn" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:textSize="10dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="#999"
+        android:textColor="#fff"
+        android:text="알로 목록" />
+</LinearLayout>

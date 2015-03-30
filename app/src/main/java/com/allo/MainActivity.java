@@ -8,8 +8,9 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -38,6 +39,7 @@ public class MainActivity extends Activity{
     ContactSync mContactSync;
 
     ListView friendList;
+    LinearLayout headerLayout;
     Friend myInfo;
     Friend currentFriend;
 
@@ -66,7 +68,25 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
         myInfo = new Friend();
 
+        setLayout();
+        setListener();
+
+        mContext = this;
+
+        mContactSync= new ContactSync(MainActivity.this);
+        syncFriends();
+
+        mContactSync.syncLocalContacts();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("allo-state"));
+    }
+
+    private void setLayout(){
         friendList = (ListView) findViewById(R.id.friendList);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.layout_main_header, null, false);
+        friendList.addHeaderView(view);
+
 
         myInfoLayout = (LinearLayout) findViewById(R.id.myInfoLayout);
         myNameTV = (TextView) findViewById(R.id.myNameTV);
@@ -80,9 +100,9 @@ public class MainActivity extends Activity{
         playSongTV = (TextView) findViewById(R.id.playSongTV);
         imageView = (ImageView) findViewById(R.id.imageView);
         playSongPlayBtn = (ImageButton) findViewById(R.id.playSongPlayBtn);
+    }
 
-
-
+    private void setListener(){
         myInfoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,17 +127,6 @@ public class MainActivity extends Activity{
                 listViewUIInit();
             }
         });
-
-        mContext = this;
-
-        mContactSync= new ContactSync(MainActivity.this);
-        syncFriends();
-
-
-        mContactSync.syncLocalContacts();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("allo-state"));
-
     }
 
     private void setPlayBarUI(){
@@ -144,18 +153,15 @@ public class MainActivity extends Activity{
         playSongPlayBtn.setBackgroundResource(R.drawable.pause_white_btn);
         String play_title = currentFriend.getRingTitle()+" - "+currentFriend.getRingSinger();
         playSongTV.setText(play_title);
-
     }
+
     public void pauseRingbackTone(){
         RingbackTone mRingbackTone = RingbackTone.getInstance();
         mRingbackTone.pauseRingBackTone();
         playBarUIInit();
     }
 
-
-
-
-    public void playUpdate(Friend mFriend){
+    public void playBarUIUpdate(Friend mFriend){
         currentFriend = mFriend;
         if (mFriend.getIsPlaying()){
             playRingbackTone();
@@ -165,21 +171,6 @@ public class MainActivity extends Activity{
     }
 
 
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            Log.i("receiver", "stop stop stop");
-            String message = intent.getStringExtra("message");
-            if (message.equals("stop")){
-                myInfoUIInit();
-                listViewUIInit();
-                playBarUIInit();
-            }
-
-        }
-    };
 
 
     public void syncFriends(){
@@ -218,7 +209,7 @@ public class MainActivity extends Activity{
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i("HTTP RESPONSE......", new String(responseBody));
-                mainUIupdate(new String(responseBody));
+                mainUIUpdate(new String(responseBody));
 
 
             }
@@ -232,11 +223,33 @@ public class MainActivity extends Activity{
     }
 
     public static int dpToPx(Context context, int dp) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+//        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+//        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
         return px;
     }
-    private void mainUIupdate(String responseString){
+
+    private void setMyInfoUIUpdate(JSONObject my_info_object) throws Exception{
+        myInfo.setNickname(my_info_object.getString("nickname"));
+        myInfo.setRingTitle(my_info_object.getString("ring_to_me_title"));
+        myInfo.setRingSinger(my_info_object.getString("ring_to_me_singer"));
+        myInfo.setRingURL(my_info_object.getString("ring_to_me_url"));
+        myInfo.setRingCount(my_info_object.getString("my_ring_count"));
+        myInfo.setStartPoint(my_info_object.getString("start_point"));
+        myInfo.setIsPlaying(false);
+
+        myNameTV.setText(myInfo.getNickname());
+        String ring_count = "총 "+myInfo.getRingCount()+"곡";
+        myInfoTV.setText(ring_count);
+        mySongTV.setText(myInfo.getRingTitle());
+        mySongArtistTV.setText(myInfo.getRingSinger());
+
+        currentFriend = myInfo;
+        setPlayBarUI();
+    }
+
+
+    private void mainUIUpdate(String responseString){
         friend_array = new ArrayList<>();
 
         JSONObject response_object = null;
@@ -250,76 +263,16 @@ public class MainActivity extends Activity{
                 JSONArray friends_object = response_object.getJSONArray("friends");
                 JSONObject my_info_object = response_object.getJSONObject("my_info");
 
-                myInfo.setNickname(my_info_object.getString("nickname"));
-                myInfo.setRingTitle(my_info_object.getString("ring_to_me_title"));
-                myInfo.setRingSinger(my_info_object.getString("ring_to_me_singer"));
-                myInfo.setRingURL(my_info_object.getString("ring_to_me_url"));
-                myInfo.setRingCount(my_info_object.getString("my_ring_count"));
-                myInfo.setStartPoint(my_info_object.getString("start_point"));
-                myInfo.setIsPlaying(false);
-
-                myNameTV.setText(myInfo.getNickname());
-                String ring_count = "총 "+myInfo.getRingCount()+"곡";
-                myInfoTV.setText(ring_count);
-                mySongTV.setText(myInfo.getRingTitle());
-                mySongArtistTV.setText(myInfo.getRingSinger());
-
-                currentFriend = myInfo;
-//                setRingbackTone(myInfo);
-                setPlayBarUI();
-
-
-
-                for (int i = 0; i < friends_object.length(); i++) {
-                    JSONObject friend_object = friends_object.getJSONObject(i);
-
-                    String phone_number = friend_object.getString("phone_number");
-                    String nickname = friend_object.getString("nickname");
-                    String friend_id = friend_object.getString("friend_id");
-                    String ring_to_friend_title = friend_object.getString("ring_to_friend_title");
-                    String ring_to_friend_url = friend_object.getString("ring_to_friend_url");
-                    String ring_to_friend_singer;
-                    try{
-                        ring_to_friend_singer = friend_object.getString("ring_to_friend_singer");
-                    }catch(Exception e){
-                        ring_to_friend_singer = "";
-                    }
-
-//
-                    Friend mFriend = new Friend();
-                    mFriend.setPhoneNumber(phone_number);
-                    mFriend.setNickname(nickname);
-                    mFriend.setFriendId(friend_id);
-                    mFriend.setRingTitle(ring_to_friend_title);
-                    mFriend.setRingURL(ring_to_friend_url);
-                    mFriend.setRingSinger(ring_to_friend_singer);
-                    mFriend.setIsPlaying(false);
-
-                    friend_array.add(mFriend);
-                }
-
                 Log.i("friend array size", String.valueOf(friends_object.length()));
+
+                setMyInfoUIUpdate(my_info_object);
+                setFriendUIUpdate(friends_object);
+
 
 
                 MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.layout_main_item, friend_array);
                 friendList.setAdapter(adapter);
 
-                int height = 70*(friends_object.length());
-                Log.i("height dp ", String.valueOf(height));
-                Log.i("height px ", String.valueOf(dpToPx(mContext, height)));
-
-
-                ViewGroup.LayoutParams lp = friendList.getLayoutParams();
-//                lp.height = dpToPx(mContext, height);
-                lp.height =10000;
-                friendList.setLayoutParams(lp);
-//                friendList.requestLayout();
-
-
-//                ViewGroup.LayoutParams params = listView.getLayoutParams();
-//                params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-//                listView.setLayoutParams(params);
-//                listView.requestLayout();
 
                 ContactDBOpenHelper mContactDBOpenHelper = new ContactDBOpenHelper(mContext);
                 mContactDBOpenHelper.open_writableDatabase();
@@ -330,19 +283,39 @@ public class MainActivity extends Activity{
                 Log.i("HttpRequest", "fail fail fail fail");
             }
 
-        }catch (JSONException e){
+        }catch (Exception e){
             System.out.println(e);
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("resume", "onResume onResume");
-        if (isFirstResume){
-            isFirstResume = false;
-        }else{
-            setResumePlayBarUI();
+
+    private void setFriendUIUpdate(JSONArray friends_object) throws Exception{
+
+        for (int i = 0; i < friends_object.length(); i++) {
+            JSONObject friend_object = friends_object.getJSONObject(i);
+
+            String phone_number = friend_object.getString("phone_number");
+            String nickname = friend_object.getString("nickname");
+            String friend_id = friend_object.getString("friend_id");
+            String ring_to_friend_title = friend_object.getString("ring_to_friend_title");
+            String ring_to_friend_url = friend_object.getString("ring_to_friend_url");
+            String ring_to_friend_singer;
+            try{
+                ring_to_friend_singer = friend_object.getString("ring_to_friend_singer");
+            }catch(Exception e){
+                ring_to_friend_singer = "";
+            }
+
+            Friend mFriend = new Friend();
+            mFriend.setPhoneNumber(phone_number);
+            mFriend.setNickname(nickname);
+            mFriend.setFriendId(friend_id);
+            mFriend.setRingTitle(ring_to_friend_title);
+            mFriend.setRingURL(ring_to_friend_url);
+            mFriend.setRingSinger(ring_to_friend_singer);
+            mFriend.setIsPlaying(false);
+
+            friend_array.add(mFriend);
         }
     }
 
@@ -360,6 +333,20 @@ public class MainActivity extends Activity{
             playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
     }
 
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("resume", "onResume onResume");
+        if (isFirstResume){
+            isFirstResume = false;
+        }else{
+            setResumePlayBarUI();
+        }
+    }
+
+
     @Override
     protected void onPause(){
         super.onPause();
@@ -375,21 +362,23 @@ public class MainActivity extends Activity{
     }
 
 
-//     onClick method
-    public void playSongPlayBtn(View v){
-        RingbackTone mRingbackTone = RingbackTone.getInstance();
-        if (mRingbackTone.isPlayingNow()){
-            pauseRingbackTone();
-            myInfoUIInit();
-            listViewUIInit();
-        }else{
-            playRingbackTone();
+
+
+//    play complete listener method
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            Log.i("receiver", "stop stop stop");
+            String message = intent.getStringExtra("message");
+            if (message.equals("stop")){
+                myInfoUIInit();
+                listViewUIInit();
+                playBarUIInit();
+            }
         }
-    }
-    public void listViewUpdate(ArrayList<Friend> friend_list){
-        MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.layout_main_item, friend_list);
-        friendList.setAdapter(adapter);
-    }
+    };
 
     public void myInfoUIInit(){
         myInfo.setIsPlaying(false);
@@ -405,7 +394,12 @@ public class MainActivity extends Activity{
             }
 
         }
-        listViewUpdate(friend_array);
+        listViewDataUpdate(friend_array);
+    }
+
+    public void listViewDataUpdate(ArrayList<Friend> friend_list){
+        MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.layout_main_item, friend_list);
+        friendList.setAdapter(adapter);
     }
 
     public void playBarUIInit(){
@@ -413,11 +407,20 @@ public class MainActivity extends Activity{
     }
 
 
+    //     onClick method
+    public void playSongPlayBtn(View v){
+        RingbackTone mRingbackTone = RingbackTone.getInstance();
+        if (mRingbackTone.isPlayingNow()){
+            pauseRingbackTone();
+            myInfoUIInit();
+            listViewUIInit();
+        }else{
+            playRingbackTone();
+        }
+    }
 
     public void addSongBtn(View v){
-//        Intent intent = new Intent(this, AddAlloActivity.class);
         Intent intent = new Intent(this, FragmentActivityAddAllo.class);
         startActivity(intent);
     }
-
 }
