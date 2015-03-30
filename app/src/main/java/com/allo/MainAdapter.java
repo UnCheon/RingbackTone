@@ -128,7 +128,6 @@ public class MainAdapter extends ArrayAdapter<Friend> {
         mFriendDetailDialog.show();
     }
 
-
     private class ViewHolder {
         TextView fName;
         TextView fTel;

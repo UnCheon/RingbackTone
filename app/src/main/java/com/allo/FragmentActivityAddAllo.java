@@ -143,7 +143,7 @@ public class FragmentActivityAddAllo extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0){
-                FragmentStore mFragmentStore= new FragmentStore();
+                FragmentStore mFragmentStore= new FragmentStore(mContext);
                 mFragmentStore.mPager = mPager;
                 return mFragmentStore ;
             }else if (position == 1){

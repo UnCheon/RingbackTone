@@ -26,6 +26,7 @@
             android:background="@drawable/search_btn_1"
             android:id="@+id/moreBtn" />
 
+
     </LinearLayout>
 </LinearLayout>
 <!-- From: file:/Users/baek_uncheon/AndroidStudioProjects/Ringbacktone/app/src/main/res/layout/activity_store_search.xml -->

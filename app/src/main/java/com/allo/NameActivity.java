@@ -12,6 +12,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -81,11 +82,20 @@ public class NameActivity extends Activity {
         setContentView(R.layout.activity_name);
         nameEt = (EditText)findViewById(R.id.nameEt);
 
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(nameEt, InputMethodManager.SHOW_IMPLICIT);
 
     }
 
-    public void agreeBtn (View v){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(nameEt, InputMethodManager.SHOW_IMPLICIT);
+    }
 
+
+    public void agreeBtn (View v){
         TelephonyManager telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         phone_number = telManager
                 .getLine1Number();
@@ -163,7 +173,7 @@ public class NameActivity extends Activity {
 
 
 
-    @Override
+        @Override
     protected void onNewIntent(Intent intent)
     {
         super.onNewIntent(intent);

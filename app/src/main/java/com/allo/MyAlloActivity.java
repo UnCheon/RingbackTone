@@ -71,28 +71,29 @@ public class MyAlloActivity extends Activity {
 
     }
 
-
+// on create
     private void setLayout(){
         alloList = (ListView)findViewById(R.id.friendList);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.layout_my_allo_header, null, false);
         alloList.addHeaderView(view);
 
         nameTv = (TextView) findViewById(R.id.nameTV);
-        mySongTV = (TextView) findViewById(R.id.mySongTV);
-        mySongArtistTV = (TextView) findViewById(R.id.mySongArtistTV);
+        mySongTV = (TextView) view.findViewById(R.id.mySongTV);
+        mySongArtistTV = (TextView) view.findViewById(R.id.mySongArtistTV);
 
-        mySongInfoBtn = (ImageButton) findViewById(R.id.mySongInfoBtn);
-        mySongPlayBtn = (ImageButton) findViewById(R.id.mySongPlayBtn);
+        mySongInfoBtn = (ImageButton) view.findViewById(R.id.mySongInfoBtn);
+        mySongPlayBtn = (ImageButton) view.findViewById(R.id.mySongPlayBtn);
 
-        mySongPlayLayout = (LinearLayout) findViewById(R.id.mySongPlayLayout);
+        mySongPlayLayout = (LinearLayout) view.findViewById(R.id.mySongPlayLayout);
         mySongPlayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentFriend = myInfo;
                 if (myInfo.getIsPlaying()){
-                    myInfo.setIsPlaying(false);
-                    mySongPlayBtn.setBackgroundResource(R.drawable.play_btn);
+                    myInfoUIInit();
+//                    myInfo.setIsPlaying(false);
+//                    mySongPlayBtn.setBackgroundResource(R.drawable.play_btn);
                     pauseRingbackTone();
                 }else{
                     myInfo.setIsPlaying(true);
@@ -125,6 +126,7 @@ public class MyAlloActivity extends Activity {
     }
 
 
+//    Ringbacktone play & pause
     private void playRingbackTone(){
         RingbackTone mRingbackTone = RingbackTone.getInstance();
         String substring = currentFriend.getRingURL().substring(1, 8);
@@ -149,16 +151,7 @@ public class MyAlloActivity extends Activity {
     }
 
 
-    public void playSongPlayBtn(View v){
-        RingbackTone mRingbackTone = RingbackTone.getInstance();
-        if (mRingbackTone.isPlayingNow()){
-            pauseRingbackTone();
-            myInfoUIInit();
-            listViewUIInit();
-        }else{
-            playRingbackTone();
-        }
-    }
+
 
     public void playUpdate(Allo mAllo){
         Friend mFriend = new Friend();
@@ -178,6 +171,7 @@ public class MyAlloActivity extends Activity {
     }
 
     public void myInfoUIInit(){
+        Log.i("MyInFoUIINit", "click");
         myInfo.setIsPlaying(false);
         mySongPlayBtn.setBackgroundResource(R.drawable.play_btn);
     }
@@ -212,6 +206,7 @@ public class MyAlloActivity extends Activity {
         }
     };
 
+//    Http Request
     private void getAlloList(){
         AsyncHttpClient myClient;
 
@@ -274,21 +269,29 @@ public class MyAlloActivity extends Activity {
 
                 MyAlloAdapter adapter = new MyAlloAdapter(MyAlloActivity.this, R.layout.layout_my_allo_item, allo_list_array, this);
                 alloList.setAdapter(adapter);
-
-
             }else{
                 Log.i("HttpRequest", "fail fail fail fail");
             }
-
         }catch (JSONException e){
             System.out.println(e);
         }
     }
 
+//    OnClick Method
     public void backBtn(View v){
         finish();
     }
 
+    public void playSongPlayBtn(View v){
+        RingbackTone mRingbackTone = RingbackTone.getInstance();
+        if (mRingbackTone.isPlayingNow()){
+            pauseRingbackTone();
+            myInfoUIInit();
+            listViewUIInit();
+        }else{
+            playRingbackTone();
+        }
+    }
     public void addSongBtn(View v){
         Intent intent = new Intent(this, FragmentActivityAddAllo.class);
         startActivity(intent);

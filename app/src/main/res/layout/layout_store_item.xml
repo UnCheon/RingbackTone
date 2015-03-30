@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
@@ -11,7 +11,17 @@
         android:padding="10dp"
         android:layout_height="80dp">
 
-        <ImageButton
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="15dp"
+            android:textColor="#777"
+            android:id="@+id/rankTV" />
+
+        <ImageView
             android:layout_marginLeft="10dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -42,7 +52,7 @@
                 android:id="@+id/artistTV" />
         </LinearLayout>
 
-        <ImageButton
+        <ImageView
             android:layout_marginRight="10dp"
             android:layout_width="24dp"
             android:layout_height="24dp"

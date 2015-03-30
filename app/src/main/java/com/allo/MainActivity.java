@@ -9,10 +9,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -88,14 +86,16 @@ public class MainActivity extends Activity{
         friendList.addHeaderView(view);
 
 
-        myInfoLayout = (LinearLayout) findViewById(R.id.myInfoLayout);
-        myNameTV = (TextView) findViewById(R.id.myNameTV);
-        myInfoTV = (TextView) findViewById(R.id.myInfoTV);
-        mySongTV = (TextView) findViewById(R.id.mySongTV);
-        mySongArtistTV = (TextView) findViewById(R.id.mySongArtistTV);
-        mySongInfoBtn = (ImageButton) findViewById(R.id.mySongInfoBtn);
-        mySongPlayBtn = (ImageButton) findViewById(R.id.mySongPlayBtn);
-        mySongPlayLayout = (LinearLayout) findViewById(R.id.mySongPlayLayout);
+
+
+        myInfoLayout = (LinearLayout) view.findViewById(R.id.myInfoLayout);
+        myNameTV = (TextView) view.findViewById(R.id.myNameTV);
+        myInfoTV = (TextView) view.findViewById(R.id.myInfoTV);
+        mySongTV = (TextView) view.findViewById(R.id.mySongTV);
+        mySongArtistTV = (TextView) view.findViewById(R.id.mySongArtistTV);
+        mySongInfoBtn = (ImageButton) view.findViewById(R.id.mySongInfoBtn);
+        mySongPlayBtn = (ImageButton) view.findViewById(R.id.mySongPlayBtn);
+        mySongPlayLayout = (LinearLayout) view.findViewById(R.id.mySongPlayLayout);
 
         playSongTV = (TextView) findViewById(R.id.playSongTV);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -129,14 +129,9 @@ public class MainActivity extends Activity{
         });
     }
 
-    private void setPlayBarUI(){
-        String play_title = myInfo.getRingTitle()+" - "+myInfo.getRingSinger();
-        playSongTV.setText(play_title);
-        RingbackTone mRingbackTone = RingbackTone.getInstance();
-        mRingbackTone.setNowPlayingFriend(currentFriend);
-    }
 
 
+//    Ringbacktone play & pause
     public void playRingbackTone(){
         RingbackTone mRingbackTone = RingbackTone.getInstance();
         String substring = currentFriend.getRingURL().substring(1, 8);
@@ -161,6 +156,8 @@ public class MainActivity extends Activity{
         playBarUIInit();
     }
 
+
+//    call from adapter
     public void playBarUIUpdate(Friend mFriend){
         currentFriend = mFriend;
         if (mFriend.getIsPlaying()){
@@ -172,6 +169,7 @@ public class MainActivity extends Activity{
 
 
 
+// HTTp Request
 
     public void syncFriends(){
         AsyncHttpClient myClient;
@@ -222,12 +220,39 @@ public class MainActivity extends Activity{
 
     }
 
-    public static int dpToPx(Context context, int dp) {
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
-//        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-//        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-        return px;
+
+    private void mainUIUpdate(String responseString){
+        friend_array = new ArrayList<>();
+
+        JSONObject response_object = null;
+        String status = null;
+
+        try{
+            JSONObject result_object = new JSONObject(responseString);
+            response_object = result_object.getJSONObject("response");
+            status = result_object.getString("status");
+            if (status.equals("success")){
+                JSONArray friends_object = response_object.getJSONArray("friends");
+                JSONObject my_info_object = response_object.getJSONObject("my_info");
+
+                setMyInfoUIUpdate(my_info_object);
+                setFriendUIUpdate(friends_object);
+
+                ContactDBOpenHelper mContactDBOpenHelper = new ContactDBOpenHelper(mContext);
+                mContactDBOpenHelper.open_writableDatabase();
+                mContactDBOpenHelper.updateContacts();
+                mContactDBOpenHelper.close();
+
+            }else{
+                Log.i("HttpRequest", "fail fail fail fail");
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
+
+//    Request success and UI update
 
     private void setMyInfoUIUpdate(JSONObject my_info_object) throws Exception{
         myInfo.setNickname(my_info_object.getString("nickname"));
@@ -248,46 +273,12 @@ public class MainActivity extends Activity{
         setPlayBarUI();
     }
 
-
-    private void mainUIUpdate(String responseString){
-        friend_array = new ArrayList<>();
-
-        JSONObject response_object = null;
-        String status = null;
-
-        try{
-            JSONObject result_object = new JSONObject(responseString);
-            response_object = result_object.getJSONObject("response");
-            status = result_object.getString("status");
-            if (status.equals("success")){
-                JSONArray friends_object = response_object.getJSONArray("friends");
-                JSONObject my_info_object = response_object.getJSONObject("my_info");
-
-                Log.i("friend array size", String.valueOf(friends_object.length()));
-
-                setMyInfoUIUpdate(my_info_object);
-                setFriendUIUpdate(friends_object);
-
-
-
-                MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.layout_main_item, friend_array);
-                friendList.setAdapter(adapter);
-
-
-                ContactDBOpenHelper mContactDBOpenHelper = new ContactDBOpenHelper(mContext);
-                mContactDBOpenHelper.open_writableDatabase();
-                mContactDBOpenHelper.updateContacts();
-                mContactDBOpenHelper.close();
-
-            }else{
-                Log.i("HttpRequest", "fail fail fail fail");
-            }
-
-        }catch (Exception e){
-            System.out.println(e);
-        }
+    private void setPlayBarUI(){
+        String play_title = myInfo.getRingTitle()+" - "+myInfo.getRingSinger();
+        playSongTV.setText(play_title);
+        RingbackTone mRingbackTone = RingbackTone.getInstance();
+        mRingbackTone.setNowPlayingFriend(currentFriend);
     }
-
 
     private void setFriendUIUpdate(JSONArray friends_object) throws Exception{
 
@@ -317,55 +308,16 @@ public class MainActivity extends Activity{
 
             friend_array.add(mFriend);
         }
-    }
+        Log.i("friend array size", String.valueOf(friends_object.length()));
 
-    private void setResumePlayBarUI(){
-        RingbackTone mRingbackTone = RingbackTone.getInstance();
-        currentFriend = mRingbackTone.getNowPlayingFriend();
-        boolean isPlaying = mRingbackTone.isPlayingNow();
-
-        String play_title = currentFriend.getRingTitle()+" - "+currentFriend.getRingSinger();
-        playSongTV.setText(play_title);
-
-        if (isPlaying)
-            playSongPlayBtn.setBackgroundResource(R.drawable.pause_white_btn);
-        else
-            playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
-    }
-
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("resume", "onResume onResume");
-        if (isFirstResume){
-            isFirstResume = false;
-        }else{
-            setResumePlayBarUI();
-        }
-    }
-
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        Log.i("pause", "onPause onPause");
-    }
-
-    @Override
-    protected void onDestroy() {
-        // Unregister since the activity is about to be closed.
-        // This is somewhat like [[NSNotificationCenter defaultCenter] removeObserver:name:object:]
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-        super.onDestroy();
+        MainAdapter adapter = new MainAdapter(MainActivity.this, R.layout.layout_main_item, friend_array);
+        friendList.setAdapter(adapter);
     }
 
 
 
 
 //    play complete listener method
-
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -380,11 +332,15 @@ public class MainActivity extends Activity{
         }
     };
 
+
+//    UI init
     public void myInfoUIInit(){
         myInfo.setIsPlaying(false);
         mySongPlayBtn.setBackgroundResource(R.drawable.play_btn);
     }
-
+    public void playBarUIInit(){
+        playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
+    }
     public void listViewUIInit(){
         for (int i = 0 ; i < friend_array.size(); i++) {
             Friend friend = friend_array.get(i);
@@ -402,9 +358,7 @@ public class MainActivity extends Activity{
         friendList.setAdapter(adapter);
     }
 
-    public void playBarUIInit(){
-        playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
-    }
+
 
 
     //     onClick method
@@ -422,5 +376,47 @@ public class MainActivity extends Activity{
     public void addSongBtn(View v){
         Intent intent = new Intent(this, FragmentActivityAddAllo.class);
         startActivity(intent);
+    }
+
+
+//    Override method
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("resume", "onResume onResume");
+        if (isFirstResume){
+            isFirstResume = false;
+        }else{
+            setResumePlayBarUI();
+        }
+    }
+
+    private void setResumePlayBarUI(){
+        RingbackTone mRingbackTone = RingbackTone.getInstance();
+        currentFriend = mRingbackTone.getNowPlayingFriend();
+        boolean isPlaying = mRingbackTone.isPlayingNow();
+
+        String play_title = currentFriend.getRingTitle()+" - "+currentFriend.getRingSinger();
+        playSongTV.setText(play_title);
+
+        if (isPlaying)
+            playSongPlayBtn.setBackgroundResource(R.drawable.pause_white_btn);
+        else
+            playSongPlayBtn.setBackgroundResource(R.drawable.play_white_btn);
+    }
+
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.i("pause", "onPause onPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        // This is somewhat like [[NSNotificationCenter defaultCenter] removeObserver:name:object:]
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
     }
 }

@@ -97,9 +97,6 @@ public class MyAlloAdapter extends ArrayAdapter<Allo> {
                     mMyAlloActivity.listViewUpdate(allo_list);
                     mMyAlloActivity.myInfoUIInit();
                     mMyAlloActivity.playUpdate(mAllo);
-
-
-
                 }
             });
         }

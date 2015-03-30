@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.uncheon.ringbacktone"
+    package="com.allo"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -58,8 +58,7 @@
 
         <activity
             android:name="com.allo.IntroActivity"
-            android:label="@string/title_activity_intro"
-            android:launchMode="singleTask" >
+            android:label="@string/title_activity_intro" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

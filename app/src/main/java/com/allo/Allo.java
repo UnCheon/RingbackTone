@@ -9,6 +9,7 @@ public class Allo {
     String ringAlbum;
     String ringURL;
     String ringId;
+    String ringRank;
     boolean isPlaying;
 
     public void setRingTitle(String ringTitle) {
@@ -38,4 +39,10 @@ public class Allo {
 
     public void setIsPlaying (boolean isPlaying){this.isPlaying = isPlaying;}
     public boolean getIsPlaying(){return isPlaying;}
+
+    public void setRingRank(String ringRank) {
+        this.ringRank = ringRank;
+    }
+    public String getRingRank(){return ringRank;}
+
 }
